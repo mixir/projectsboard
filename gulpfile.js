@@ -14,16 +14,8 @@ var tsc = require('gulp-typescript');
 var uglify = require('gulp-uglify');
 var watch = require('gulp-watch');
 var insert = require('gulp-insert');
-
-
-    var sass = require('gulp-sass');
-
-
-
-    var jade = require('gulp-jade');
-
-
-
+var sass = require('gulp-sass');
+var jade = require('gulp-jade');
 var Builder = require('systemjs-builder');
 var del = require('del');
 var fs = require('fs');
@@ -32,7 +24,6 @@ var join = path.join;
 var runSequence = require('run-sequence');
 var semver = require('semver');
 var series = require('stream-series');
-
 var express = require('express');
 var serveStatic = require('serve-static');
 var openResource = require('open');
@@ -62,6 +53,7 @@ var PATH = {
     src: {
         // Order is quite important here for the HTML tag injection.
         lib: [
+            './node_modules/angular2/node_modules/traceur/bin/traceur-runtime.js',
             './node_modules/angular2/node_modules/traceur/bin/traceur-runtime.js',
             './node_modules/es6-module-loader/dist/es6-module-loader-sans-promises.js',
             './node_modules/es6-module-loader/dist/es6-module-loader-sans-promises.js.map',
@@ -176,17 +168,17 @@ gulp.task('build.jade.dev', function() {
 
 gulp.task('build.assets.dev', [
     'build.js.dev'
-    
+
     ,'build.jade.dev'
-    
+
 ], function () {
 
-    
+
         gulp.src(['./app/**/*.sass', './app/**/*.scss'])
             .pipe(sass().on('error', sass.logError))
             .pipe(gulp.dest(PATH.dest.dev.all));
 
-    
+
 
 
 
@@ -277,16 +269,16 @@ gulp.task('build.jade.prod', function() {
 
 gulp.task('build.assets.prod', [
     'build.js.prod'
-    
+
     ,'build.jade.prod'
-    
+
 ], function () {
-    
+
         gulp.src(['./app/**/*.sass', './app/**/*.scss'])
             .pipe(sass().on('error', sass.logError))
             .pipe(gulp.dest(PATH.dest.dev.all));
 
-    
+
 
     var filterHTML = filter('**/*.html');
     var filterCSS = filter('**/*.css');
